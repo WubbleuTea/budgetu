@@ -1,5 +1,6 @@
 // create variable to hold db connection
 let db;
+window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB
 // establish a connection to IndexedDB database called 'budget' and set it to version 1
 const request = indexedDB.open('budget', 1);
 
@@ -32,11 +33,11 @@ function saveRecord(record) {
   // open a new transaction with the database with read and write permissions 
   const transaction = db.transaction(['new_transaction'], 'readwrite');
 
-  // access the object store for `new_pizza`
-  const pizzaObjectStore = transaction.objectStore('new_transaction');
+  // access the object store for `new_transaction`
+  const transactionObjectStore = transaction.objectStore('new_transaction');
 
   // add record to your store with add method
-  pizzaObjectStore.add(record);
+  transactionObjectStore.add(record);
 };
 
 function uploadTransaction() {
@@ -67,10 +68,10 @@ function uploadTransaction() {
           }
           // open one more transaction
           const transaction = db.transaction(['new_transaction'], 'readwrite');
-          // access the new_pizza object store
-          const pizzaObjectStore = transaction.objectStore('new_transaction');
+          // access the new_transaction object store
+          const transactionObjectStore = transaction.objectStore('new_transaction');
           // clear all items in your store
-          pizzaObjectStore.clear();
+          transactionObjectStore.clear();
 
           alert('All saved transactions has been submitted!');
         })
